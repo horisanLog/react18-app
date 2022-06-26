@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  front:
+  frontend:
     build:
       context: .
       args:
@@ -11,7 +11,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true # Hot Reload を有効にする
     volumes:
-      - ./:/front
+      - ./:/frontend
     ports:
       - "8000:3000"
     tty: true
