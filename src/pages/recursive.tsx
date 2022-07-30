@@ -1,6 +1,4 @@
-import React, {
-  memo,
-} from "react";
+import React, { memo } from "react";
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -8,14 +6,18 @@ import TreeItem from "@mui/lab/TreeItem";
 
 import { styled, Box } from "@mui/material";
 
-const CustomBox = styled(Box)(() => ({
-  width: "100%",
-  borderColor: "#22BA9D",
-  borderRadius: "0.5rem",
-  boxShadow: "1px 1px 2px 2px rgba(0, 0, 0, 0.6)",
-  letterSpacing: "0.7px",
-  color: "#454545",
-}));
+// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓お試し型推論の勉強
+export type Test = {
+  id: string;
+  team_name: string;
+  children: Test[];
+};
+
+type JSONValueType = string | Test | JSONValueTypeArray | JSONValueTypeObject;
+
+interface JSONValueTypeObject {
+  [key: string]: JSONValueType;
+}
 
 export type Team = {
   id: string;
@@ -25,6 +27,44 @@ export type Team = {
   depth: number;
   children: Team[];
 };
+
+interface JSONValueTypeArray extends Array<JSONValueType> {}
+
+const test: JSONValueTypeObject = {
+  id: "1",
+  team_name: "事業本部",
+  children: [
+    {
+      id: "2",
+      team_name: "東日本",
+      children: [
+        {
+          id: "4",
+          team_name: "広報部",
+          children: [],
+        },
+      ],
+    },
+    {
+      id: "3",
+      team_name: "西日本",
+      children: [
+        {
+          id: "5",
+          team_name: "営業部",
+          children: [],
+        },
+        {
+          id: "6",
+          team_name: "開発部",
+          children: [],
+        },
+      ],
+    },
+  ],
+};
+// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑お試し型推論の勉強
+
 
 const data: Team = {
   id: "1",
@@ -83,7 +123,6 @@ interface Props {
 }
 
 export const RecursivePage: React.FC = memo(() => {
-
   const teamTree = (teams: Team) => (
     <TreeItem key={teams.id} nodeId={teams.id} label={teams.team_name}>
       {Array.isArray(teams.children)
@@ -125,7 +164,7 @@ export const RecursivePage: React.FC = memo(() => {
           height: "100%",
           width: "30%",
           overflowY: "auto",
-          background: "white"
+          background: "white",
         }}
       >
         <TeamTree teams={data} />
