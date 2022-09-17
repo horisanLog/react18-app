@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ImperativeHandlePage } from "./pages/imperativeHandle";
+import { LayoutPage } from "./pages/layout";
 
 const TopPage = lazy(() =>
   import("./pages").then(({ TopPage }) => ({
@@ -70,6 +71,7 @@ export const Routing: React.FC = memo(() => {
           <Route path="/recursive" element={<RecursivePage />} />
           <Route path="/query" element={<UserQueryPage />} />
           <Route path="/forward_ref" element={<ImperativeHandlePage />} />
+          <Route path="/layout" element={<LayoutPage />} />
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
